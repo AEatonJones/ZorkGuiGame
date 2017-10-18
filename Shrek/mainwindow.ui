@@ -6,70 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>653</width>
-    <height>451</height>
+    <width>739</width>
+    <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>61</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>changed</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>70</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
-      <width>171</width>
-      <height>101</height>
+      <y>30</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -81,10 +32,10 @@
     <widget class="QPushButton" name="moveUp">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>0</y>
-       <width>51</width>
-       <height>41</height>
+       <x>20</x>
+       <y>20</y>
+       <width>16</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
@@ -94,10 +45,10 @@
     <widget class="QPushButton" name="moveDown">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>50</y>
-       <width>51</width>
-       <height>41</height>
+       <x>20</x>
+       <y>40</y>
+       <width>16</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
@@ -107,10 +58,10 @@
     <widget class="QPushButton" name="moveRight">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>50</y>
-       <width>41</width>
-       <height>41</height>
+       <x>40</x>
+       <y>40</y>
+       <width>21</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
@@ -120,10 +71,10 @@
     <widget class="QPushButton" name="moveLeft">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>41</width>
-       <height>41</height>
+       <x>0</x>
+       <y>40</y>
+       <width>16</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
@@ -134,12 +85,77 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>60</x>
       <y>20</y>
-      <width>451</width>
+      <width>611</width>
       <height>381</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QTextBrowser" name="textBrowser">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>10</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>60</y>
+       <width>61</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>changed</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -147,7 +163,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>653</width>
+     <width>739</width>
      <height>21</height>
     </rect>
    </property>

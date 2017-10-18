@@ -1,11 +1,13 @@
 #include <QGraphicsScene>
 #include <QtWidgets>
-#include <QImage>
 #include <QKeyEvent>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "zorkul.h"
 #include <QMediaPlayer>
+#include <QBrush>
+#include <QImage>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,21 +17,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new QGraphicsScene(this);
 
+    scene->setBackgroundBrush(QBrush(QImage(":/images/swamp1.png")));
+
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
+    setFixedSize(730,450);
+
     character = new Character();
     //QGraphicsPixmapItem *character=new QGraphicsPixmapItem(QPixmap(":/images/character1.png"));
 
-    character->setPos(-100,-100);
+    character->setPos(400,250);
     //QGraphicsItem *character = scene->itemAt(50, 50);
 
     character->setFlag(QGraphicsItem::ItemIsFocusable);
     character->setFocus();
 
     scene->addItem(character);
+    scene->setSceneRect(0,0,600,378);
     ui->graphicsView->setScene(scene);
 
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    scene->setSceneRect(-200,-200,300,300);
-
+    //ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    //scene->setSceneRect(-200,-200,300,300);
+    /*
     QPen mypen = QPen(Qt::red);
 
     QLineF TopLine(scene->sceneRect().topLeft(), scene->sceneRect().topRight());
@@ -41,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addLine(LeftLine,mypen);
     scene->addLine(RightLine,mypen);
     scene->addLine(BottomLine,mypen);
-
+    */
     QMediaPlayer * music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/music/music.mp3"));
     music->play();
@@ -50,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(timer, SIGNAL(timeout()), scene,SLOT(advance()));
     //timer->start(100);
 
-/*
+    /*
     int ItemCount = 25;
     for(int i = 0; i < ItemCount; i++)
     {

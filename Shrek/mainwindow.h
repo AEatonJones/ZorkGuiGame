@@ -9,6 +9,7 @@
 #include <QGraphicsPixMapItem>
 #include <QObject>
 #include <QGraphicsItem>
+#include <QGraphicsView>
 
 namespace Ui {
 class MainWindow;
