@@ -1,0 +1,13 @@
+INPUT(
+./debug\mainwindow.o
+./debug\character.o
+./debug\command.o
+./debug\commandwords.o
+./debug\item.o
+./debug\parser.o
+./debug\room.o
+./debug\zorkul.o
+./debug\qrc_res.o
+./debug\moc_mainwindow.o
+./debug\moc_character.o
+);

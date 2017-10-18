@@ -1,0 +1,13 @@
+INPUT(
+./release\mainwindow.o
+./release\character.o
+./release\command.o
+./release\commandwords.o
+./release\item.o
+./release\parser.o
+./release\room.o
+./release\zorkul.o
+./release\qrc_res.o
+./release\moc_mainwindow.o
+./release\moc_character.o
+);
