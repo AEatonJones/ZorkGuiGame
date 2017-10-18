@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "zorkul.h"
+#include <QMediaPlayer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,6 +41,10 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addLine(LeftLine,mypen);
     scene->addLine(RightLine,mypen);
     scene->addLine(BottomLine,mypen);
+
+    QMediaPlayer * music = new QMediaPlayer();
+    music->setMedia(QUrl("qrc:/music/music.mp3"));
+    music->play();
 
     //timer = new QTimer(this);
     //connect(timer, SIGNAL(timeout()), scene,SLOT(advance()));
