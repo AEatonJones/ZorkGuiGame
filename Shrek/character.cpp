@@ -10,35 +10,41 @@ void Character::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key_Left){
         setPixmap(QPixmap(":/images/character1.png"));
-        //if (pos().x() > 0)
-        setPos(x()-10,y());
+        if (pos().x() > 0)
+            setPos(x()-10,y());
     }
     else if (event->key() == Qt::Key_Right){
         setPixmap(QPixmap(":/images/character2.png"));
-        if (pos().x() + 100 < 800)
-        setPos(x()+10,y());
+        if (pos().x() + 100 < 600)
+            setPos(x()+10,y());
     }
     else if (event->key() == Qt::Key_Up){
-        setPos(x(),y()-10);
+        if (pos().y() > 0)
+            setPos(x(),y()-10);
     }
     else if (event->key() == Qt::Key_Down){
-        setPos(x(),y()+10);
+        if (pos().y() + 100 < 378)
+            setPos(x(),y()+10);
     }
     else if(event->key() == Qt::Key_Q) {
         setPixmap(QPixmap(":/images/character1.png"));
-        setPos(x()-10,y()-10);
+        if (pos().x() > 0 && pos().y() > 0)
+            setPos(x()-10,y()-10);
     }
     else if(event->key() == Qt::Key_E) {
         setPixmap(QPixmap(":/images/character2.png"));
-        setPos(x()+10,y()-10);
+        if (pos().x() + 100 < 600 && pos().y() > 0)
+            setPos(x()+10,y()-10);
     }
     else if(event->key() == Qt::Key_A) {
         setPixmap(QPixmap(":/images/character1.png"));
-        setPos(x()-10,y()+10);
+        if (pos().y() + 100 < 378 && pos().x() > 0)
+            setPos(x()-10,y()+10);
     }
     else if(event->key() == Qt::Key_D) {
         setPixmap(QPixmap(":/images/character2.png"));
-        setPos(x()+10,y()+10);
+        if (pos().y() + 100 < 378 && pos().x() + 100 < 600)
+            setPos(x()+10,y()+10);
     }
 }
 
