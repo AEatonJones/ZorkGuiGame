@@ -34,7 +34,8 @@ SOURCES += \
     room.cpp \
     zorkul.cpp \
     inventory.cpp \
-    itemaxe.cpp
+    itemaxe.cpp \
+    itemkey.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -46,7 +47,8 @@ HEADERS += \
     room.h \
     zorkul.h \
     inventory.h \
-    itemaxe.h
+    itemaxe.h \
+    itemkey.h
 
 FORMS += \
         mainwindow.ui

@@ -56,6 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
     itemaxe->setPos(300,200);
     scene->addItem(itemaxe);
 
+    itemkey = new ItemKey();
+    itemkey->setPos(450,250);
+    scene->addItem(itemkey);
+
     //timer = new QTimer(this);
     //connect(timer, SIGNAL(timeout()), scene,SLOT(advance()));
     //timer->start(100);

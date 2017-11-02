@@ -16,6 +16,7 @@
 #include "itemaxe.h"
 
 #include "item.h"
+#include "itemkey.h"
 #include <QMediaPlayer>
 
 namespace Ui {
@@ -46,6 +47,7 @@ public:
     QGraphicsScene * scene;
     Character *character;
     ItemAxe *itemaxe;
+    ItemKey *itemkey;
 
     QMediaPlayer * music;
     int fps;
