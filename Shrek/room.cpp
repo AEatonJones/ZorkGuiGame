@@ -56,7 +56,7 @@ string Room::displayItem() {
     else if (itemsInRoom.size() > 0) {
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
+            //tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
             x++;
             }
         }
@@ -67,7 +67,7 @@ int Room::numberOfItems() {
     return itemsInRoom.size();
 }
 
-int Room::isItemInRoom(string inString)
+/*int Room::isItemInRoom(string inString)
 {
     int sizeItems = (itemsInRoom.size());
     if (itemsInRoom.size() < 1) {
@@ -75,16 +75,16 @@ int Room::isItemInRoom(string inString)
         }
     else if (itemsInRoom.size() > 0) {
        int x = (0);
-        for (int n = sizeItems; n > 0; n--) {
+        //for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
-            int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
-            if (tempFlag == 0) {
-                itemsInRoom.erase(itemsInRoom.begin()+x);
-                return x;
-            }
-            x++;
-            }
+            //int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
+            //if (tempFlag == 0) {
+                //itemsInRoom.erase(itemsInRoom.begin()+x);
+               // return x;
+           // }
+            //x++;
+            //}
         }
-    return -1;
-}
+    //return -1;
+}*/
 

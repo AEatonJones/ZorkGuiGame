@@ -32,7 +32,9 @@ SOURCES += \
     item.cpp \
     parser.cpp \
     room.cpp \
-    zorkul.cpp
+    zorkul.cpp \
+    inventory.cpp \
+    itemaxe.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +44,9 @@ HEADERS += \
     item.h \
     parser.h \
     room.h \
-    zorkul.h
+    zorkul.h \
+    inventory.h \
+    itemaxe.h
 
 FORMS += \
         mainwindow.ui

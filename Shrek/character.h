@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixMapItem>
 #include <QObject>
+#include <QKeyEvent>
 #include <QGraphicsItem>
 
 class Character:public QObject, public QGraphicsPixmapItem{
@@ -10,7 +11,6 @@ class Character:public QObject, public QGraphicsPixmapItem{
 public:
     Character(QGraphicsItem * parent=0);
     void keyPressEvent(QKeyEvent * event);
-    //QRectF boundingRect() const;
 private:
     void DoCollision();
 };

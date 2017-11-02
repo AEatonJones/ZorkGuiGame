@@ -1,42 +1,82 @@
+#include "mainwindow.h"
 #include "item.h"
+#include <QPixmap>
+
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
+#include <QBrush>
+#include <QRect>
+#include <QDebug>
+#include <QFont>
 
-Item::Item (string inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/) {
-    description = inDescription;
-    setWeight(inWeightGrams);
-    value = inValue;
-    /**weaponCheck(isWeapon);*/
+Item::Item(int ct){
+    // set attributes
+    count = ct;
+    picked = false;
+
+    //set count text
+    //count_text = new QGraphicsTextItem(QString::number(count),this);
+    //count_text->setFont(QFont("Times New Roman",12));
+    //count_text->setDefaultTextColor(Qt::red);
+}
+
+void Item::use(){
+}
+
+int Item::getCount(){
+    return count;
+}
+
+void Item::setCount(int c){
+    count = c;
+}
+
+void Item::setAsLeftClickItem(){
+    //game->character->inventory->left_click_item = this;
+}
+
+void Item::setAsRightClickItem(){
+    //game->character->inventory->right_click_item = this;
+}
+
+void Item::setAsMiddleClickItem(){
+    //game->character->inventory->middle_click_item = this;
+}
+
+void Item::mousePressEvent(QGraphicsSceneMouseEvent *event){
+    if (event->button() == Qt::LeftButton){
+        setAsLeftClickItem();
+        //game->scene->setFocusItem(game->character);
+    }
+
+    if (event->button() == Qt::RightButton){
+        setAsRightClickItem();
+        //game->scene->setFocusItem(game->character);
+    }
+
+    if (event->button() == Qt::MiddleButton){
+        setAsMiddleClickItem();
+        //game->scene->setFocusItem(game->character);
+    }
+}
+
+/*Item::Item (string inDescription, float inventoryalue) {
+    description = inDescription;    
+    value = inventoryalue;
 }
 
 Item::Item(string inDescription) {
     description = inDescription;
 }
 
-void Item::setWeight(int inWeightGrams)
+void Item::setValue(float inventoryalue)
 {
-    if (inWeightGrams > 9999 || inWeightGrams < 0)
-       cout << "weight invalid, must be 0<weight<9999" ;
+    if (inventoryalue > 9999 || inventoryalue < 0)
+       cout << "value inventoryalid, must be 0<value<9999" ;
     else
-       weightGrams = inWeightGrams;
+       value = inventoryalue;
 }
-
-void Item::setValue(float inValue)
-{
-    if (inValue > 9999 || inValue < 0)
-       cout << "value invalid, must be 0<value<9999" ;
-    else
-       value = inValue;
-}
-
-/**void Item::setWeaponCheck(int isWeapon)
-{
-    if(isWeapon > 0 || isWeapon < 0)
-        cout << "Item not a weapon" ;
-    else
-        cout << "Item is a weapon" ;
-}*/
 
 string Item::getShortDescription()
 {
@@ -46,5 +86,6 @@ string Item::getShortDescription()
 string Item::getLongDescription()
 {
     return " item(s), " + description + ".\n";
-}
+}*/
+
 

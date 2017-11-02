@@ -1,4 +1,7 @@
 #include <QGraphicsScene>
+#include <QLineF>
+#include <QPointF>
+#include <QCursor>
 #include <QtWidgets>
 #include <QKeyEvent>
 #include "mainwindow.h"
@@ -7,16 +10,20 @@
 #include <QMediaPlayer>
 #include <QBrush>
 #include <QImage>
+//#include "inventory.h"
+#include "item.h"
+
+#include <stdlib.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    fps = 30;
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
-
     scene->setBackgroundBrush(QBrush(QImage(":/images/swamp1.png")));
 
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -24,11 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(730,450);
 
     character = new Character();
-    //QGraphicsPixmapItem *character=new QGraphicsPixmapItem(QPixmap(":/images/character1.png"));
-
     character->setPos(400,250);
-    //QGraphicsItem *character = scene->itemAt(50, 50);
-
     character->setFlag(QGraphicsItem::ItemIsFocusable);
     character->setFocus();
 
@@ -36,24 +39,22 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->setSceneRect(0,0,600,378);
     ui->graphicsView->setScene(scene);
 
-    //ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    //scene->setSceneRect(-200,-200,300,300);
-    /*
-    QPen mypen = QPen(Qt::red);
-
-    QLineF TopLine(scene->sceneRect().topLeft(), scene->sceneRect().topRight());
-    QLineF LeftLine(scene->sceneRect().topLeft(), scene->sceneRect().bottomLeft());
-    QLineF RightLine(scene->sceneRect().topRight(), scene->sceneRect().bottomRight());
-    QLineF BottomLine(scene->sceneRect().bottomLeft(), scene->sceneRect().bottomRight());
-
-    scene->addLine(TopLine,mypen);
-    scene->addLine(LeftLine,mypen);
-    scene->addLine(RightLine,mypen);
-    scene->addLine(BottomLine,mypen);
-    */
     QMediaPlayer * music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/music/music.mp3"));
     music->play();
+    connect(music,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(replayMusic(QMediaPlayer::State)));
+
+    // add character's inventory to the scene
+    //character->inventory = new Inventory();
+    //scene->addItem(character->inventory);
+
+    setMouseTracking(true);
+
+    setWindowTitle("Detective Shrek");
+
+    itemaxe = new ItemAxe();
+    itemaxe->setPos(300,200);
+    scene->addItem(itemaxe);
 
     //timer = new QTimer(this);
     //connect(timer, SIGNAL(timeout()), scene,SLOT(advance()));
@@ -66,17 +67,61 @@ MainWindow::MainWindow(QWidget *parent) :
        MyItem *item = new MyItem();
        scene->addItem(item);
     }
-
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), scene,SLOT(advance()));
-    timer->start(100);*/
+    */
 }
+/*void MainWindow::mousePressEvent(QMouseEvent *event){
+    // if the left button was clicked
+    if (event->button() == Qt::LeftButton){
+        // inventory clicked
+        if (character->inventory->contains(event->pos())){
+            QMainWindow::mousePressEvent(event);
+            return;
+        }
+        // if there is nothing mapped to this click, return (do nothing)
+        if (character->inventory->left_click_item == nullptr){
+            return;
+        }
+        //if an item is mapped to left click - use item
+        character->inventory->left_click_item->use();
+    }
 
-/*MainWindow::Character(QGraphicsItem *parent): QGraphicsPixmapItem(parent) {
-    setPixmap(QPixmap(":/images/character1.png"));
+    // right button clicked
+    if (event->button() == Qt::RightButton){
+        if (character->inventory->contains(event->pos())){
+            QMainWindow::mousePressEvent(event);
+            return;
+        }
+        if (character->inventory->right_click_item == nullptr){
+            return;
+        }
+        character->inventory->right_click_item->use();
+    }
+
+    // middle button clicked
+    if (event->button() == Qt::MiddleButton){
+        if (character->inventory->contains(event->pos())){
+            QMainWindow::mousePressEvent(event);
+            return;
+        }
+
+        if (character->inventory->middle_click_item == nullptr){
+            return;
+        }
+        character->inventory->middle_click_item->use();
+    }
 }*/
 
+/*void MainWindow::placeItem(Item * item, int x, int y){
+    // places the item at the specified location on the scene
+    scene->addItem(item);
+    item->setPos(x,y);
+}*/
 
+void MainWindow::replayMusic(QMediaPlayer::State s){
+    if (s == QMediaPlayer::StoppedState){
+        music->play();
+    }
+}
 
 MainWindow::~MainWindow()
 {

@@ -42,11 +42,11 @@ void ZorkUL::createRooms()  {
         Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
     a = new Room("a");
-        a->addItem(new Item("x", 1, 11));
-        a->addItem(new Item("y", 2, 22));
+        //a->addItem(new Item("x", 1, 11));
+       // a->addItem(new Item("y", 2, 22));
     b = new Room("b");
-        b->addItem(new Item("xx", 3, 33));
-        b->addItem(new Item("yy", 4, 44));
+        //b->addItem(new Item("xx", 3, 33));
+        //b->addItem(new Item("yy", 4, 44));
     c = new Room("c");
     d = new Room("d");
     e = new Room("e");
@@ -150,14 +150,14 @@ bool ZorkUL::processCommand(Command command) {
         else
          if (command.hasSecondWord()) {
         cout << "you're trying to take " + command.getSecondWord() << endl;
-        int location = currentRoom->isItemInRoom(command.getSecondWord());
+        /*int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;
         else
             cout << "item is in room" << endl;
             cout << "index number " << + location << endl;
             cout << endl;
-            cout << currentRoom->longDescription() << endl;
+            cout << currentRoom->longDescription() << endl;*/
         }
     }
 

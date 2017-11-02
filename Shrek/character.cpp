@@ -1,6 +1,9 @@
+//#include "mainwindow.h"
 #include "character.h"
+//#include "itemaxe.h"
 #include <QGraphicsScene>
 #include <QKeyEvent>
+//#include <QDebug>
 
 Character::Character(QGraphicsItem *parent): QGraphicsPixmapItem(parent) {
     setPixmap(QPixmap(":/images/character1.png"));
@@ -46,6 +49,22 @@ void Character::keyPressEvent(QKeyEvent *event) {
         if (pos().y() + 100 < 378 && pos().x() + 100 < 600)
             setPos(x()+10,y()+10);
     }
+
+    /*QList<QGraphicsItem *> colliding_items = collidingItems();
+    for (int i = 0, n = colliding_items.size();i<n;i++){
+        if (typeid(ItemAxe) == typeid(*colliding_items[i])){
+            //game->scene->removeItem(colliding_items[i]);
+        }
+        else{
+            Item * item = dynamic_cast<Item *>(colliding_items[i]);
+            //player collides with item - adds item to inventory.
+            if (item != nullptr && item->picked == false){
+                 inventory->addItem(item);
+            }
+        }
+    }
+    x_prev = pos().x();
+    y_prev = pos().y();*/
 }
 
 /*QRectF Character::boundingRect() const
@@ -68,11 +87,10 @@ void Character::DoCollision()
         //set the new position
         setPos(newpoint);
     }
-
 }
-/*&&(event->key() == Qt::Key_Up))*/
-/*
 
+
+/*
 Characterx::Characterx(string description) {
     this->description = description;
 }

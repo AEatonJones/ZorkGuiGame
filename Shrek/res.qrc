@@ -4,6 +4,7 @@
         <file>character1.png</file>
         <file>character2.png</file>
         <file>swamp1.png</file>
+        <file>axe.png</file>
     </qresource>
     <qresource prefix="/music">
         <file>music.mp3</file>
