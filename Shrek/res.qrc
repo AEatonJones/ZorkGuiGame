@@ -1,11 +1,20 @@
 <RCC>
     <qresource prefix="/images">
-        <file>character.jpg</file>
         <file>character1.png</file>
         <file>character2.png</file>
         <file>swamp1.png</file>
         <file>axe.png</file>
         <file>key.png</file>
+        <file>batharea.png</file>
+        <file>crossroads.png</file>
+        <file>forest1.png</file>
+        <file>forest2.png</file>
+        <file>outhouse.png</file>
+        <file>ruinedhouse.png</file>
+        <file>garden.png</file>
+        <file>house.png</file>
+        <file>character.jpg</file>
+        <file>mapImage.png</file>
     </qresource>
     <qresource prefix="/music">
         <file>music.mp3</file>

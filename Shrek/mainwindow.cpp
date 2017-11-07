@@ -4,75 +4,102 @@
 #include <QCursor>
 #include <QtWidgets>
 #include <QKeyEvent>
+#include <QBrush>
+#include <QImage>
+#include <stdlib.h>
+#include <QMediaPlayer>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "zorkul.h"
-#include <QMediaPlayer>
-#include <QBrush>
-#include <QImage>
-//#include "inventory.h"
 #include "item.h"
-
-#include <stdlib.h>
+#include "room.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    createRooms();
+    initilizeScreen();
+    initilizeCharacter();
+    startMusic();
+}
+
+MainWindow::~MainWindow() {
+    delete ui;
+}
+
+void MainWindow::initilizeScreen()  {
     fps = 30;
     ui->setupUi(this);
-
     scene = new QGraphicsScene(this);
-    scene->setBackgroundBrush(QBrush(QImage(":/images/swamp1.png")));
-
+    setRoom();
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
-    setFixedSize(730,450);
+    setFixedSize(850,450);
+    setMouseTracking(true);
+    setWindowTitle("Detective Shrek");
+}
 
+void MainWindow::setRoom() {
+    QString backImage = currentRoom->getImageLoc();
+    scene->setBackgroundBrush(QBrush(QImage(backImage)));
+    ui->roomLoc->setText(currentRoom->Description());
+}
+
+void MainWindow::initilizeCharacter()  {
     character = new Character();
     character->setPos(400,250);
     character->setFlag(QGraphicsItem::ItemIsFocusable);
     character->setFocus();
-
     scene->addItem(character);
     scene->setSceneRect(0,0,600,378);
     ui->graphicsView->setScene(scene);
+}
 
+void MainWindow::startMusic()  {
     QMediaPlayer * music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/music/music.mp3"));
     music->play();
     connect(music,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(replayMusic(QMediaPlayer::State)));
-
-    // add character's inventory to the scene
-    //character->inventory = new Inventory();
-    //scene->addItem(character->inventory);
-
-    setMouseTracking(true);
-
-    setWindowTitle("Detective Shrek");
-
-    itemaxe = new ItemAxe();
-    itemaxe->setPos(300,200);
-    scene->addItem(itemaxe);
-
-    itemkey = new ItemKey();
-    itemkey->setPos(450,250);
-    scene->addItem(itemkey);
-
-    //timer = new QTimer(this);
-    //connect(timer, SIGNAL(timeout()), scene,SLOT(advance()));
-    //timer->start(100);
-
-    /*
-    int ItemCount = 25;
-    for(int i = 0; i < ItemCount; i++)
-    {
-       MyItem *item = new MyItem();
-       scene->addItem(item);
-    }
-    */
 }
+
+void MainWindow::replayMusic(QMediaPlayer::State s){
+    if (s == QMediaPlayer::StoppedState){
+        music->play();
+    }
+}
+
+
+void MainWindow::createRooms() {
+ Room *a, *b, *c, *d, *e, *f, *g, *h;
+        a = new Room(tr("House"),tr(":/images/house.png"));
+          // a->addItem("Farkle", 8, 4);
+          // a->addItem("Fergus", 8, 4);
+          // a->addItem("Felicia", 8, 4);
+        b = new Room(tr("Garden"),tr(":/images/garden.png"));
+        c = new Room("Bath Area",tr(":/images/batharea.png"));
+        d = new Room("Outhouse",tr(":/images/outhouse.png"));
+        e = new Room("Forest1",tr(":/images/forest1.png"));
+        f = new Room("Forest2",tr(":/images/forest2.png"));
+        g = new Room("Cross-Roads",tr(":/images/crossroads.png"));
+        h = new Room("Ruined House",tr(":/images/ruinedhouse.png"));
+
+    //         (N, E, S, W)
+    a->setExits(NULL, NULL, b, NULL);
+    b->setExits(a, c, g, e);
+    c->setExits(d, NULL, NULL, b);
+    d->setExits(NULL,NULL, c, NULL);
+    e->setExits(NULL, b, f, NULL);
+    f->setExits(e, g, NULL, NULL);
+    g->setExits(b, h, NULL, f);
+    h->setExits(NULL, NULL, NULL, g);
+    currentRoom = a;
+
+}
+
+
+
 /*void MainWindow::mousePressEvent(QMouseEvent *event){
     // if the left button was clicked
     if (event->button() == Qt::LeftButton){
@@ -115,58 +142,32 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 }*/
 
-/*void MainWindow::placeItem(Item * item, int x, int y){
-    // places the item at the specified location on the scene
-    scene->addItem(item);
-    item->setPos(x,y);
-}*/
-
-void MainWindow::replayMusic(QMediaPlayer::State s){
-    if (s == QMediaPlayer::StoppedState){
-        music->play();
-    }
+void MainWindow::on_Quit_pressed() {
+    exit(0);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+void MainWindow::on_Journal_pressed() {
+    displayJournal();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    ui->label->setText("Oh no, it's Shrek!");
+void MainWindow::displayJournal() {
+    QString resultFarkle = QString::number(character->getFoundFarkle());
+    QString resultFelicia = QString::number(character->getFoundFelicia());
+    QString resultFergus = QString::number(character->getFoundFergus());
+    QString resultAxe =  QString::number(character->getHasAxe());
+    QString resultDoll = QString::number(character->getHasDoll());
+    QString resultKey = QString::number(character->getHasKey());
+    QString journalEntry = "\nJournal\n-----------\nFound Farkle: " + resultFarkle + "\nFound Felicia: " + resultFelicia + ""
+                           "\nFound Fergus: " + resultFergus + "\nHave Axe: " + resultAxe + "\nHave Doll: " + resultDoll + "\nHave Key: " + resultKey;
+    ui->logText->setText(journalEntry);
+
 }
 
-void MainWindow::on_pushButton_pressed()
-{
-    ui->label->setText("Oh no, it's Shrek!");
+void MainWindow::on_Map_pressed() {
+    displayMap();
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
-    ui->textBrowser->setText("Oh no, it's Shrek again!");
-}
-
-void MainWindow::on_moveLeft_clicked()
-{
-    //setPixmap(QPixmap(":/images/character1.png"));
-    //setPos(x()-10,y());
-}
-
-void MainWindow::on_moveRight_clicked()
-{
-    //setPixmap(QPixmap(":/images/character2.png"));
-    //setPos(x()+10,y());
-}
-
-void MainWindow::on_moveUp_clicked()
-{
-    //setPixmap(QPixmap(":/images/character1.png"));
-    //setPos(x(),y()-10);
-}
-
-void MainWindow::on_moveDown_clicked()
-{
-    //setPixmap(QPixmap(":/images/character1.png"));
-    //setPos(x(),y()+10);
+void MainWindow::displayMap() {
+    ui->logText->setText(tr("\n                       [oh]\n                         |\n                         |\n[f1] --- [hh] --- [ba]\n |             |\n"
+                            " |             |\n[f2] --- [cr] --- [rh]"));
 }

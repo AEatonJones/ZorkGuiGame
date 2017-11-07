@@ -13,10 +13,8 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include "character.h"
-#include "itemaxe.h"
-
 #include "item.h"
-#include "itemkey.h"
+#include "room.h"
 #include <QMediaPlayer>
 
 namespace Ui {
@@ -31,44 +29,30 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    //void mouseMoveEvent(QMouseEvent *event);
-
-    //void mousePressEvent(QMouseEvent *event);
-
-    //void mouseDoubleClickEvent(QMouseEvent *event);
-
-    //void resizeEvent(QResizeEvent *event);
-
-    //void keyPressEvent(QKeyEvent * event);
-
-    //void placeItem(Item *item, int x, int y);
-
-        // attributes public as they need to be accessed by other classes
+    void initilizeScreen();
+    void initilizeCharacter();
+    void startMusic();
+    void createRooms();
+    void displayMap();
+    void displayJournal();
+    void setRoom();
+    // attributes public as they need to be accessed by other classes
     QGraphicsScene * scene;
     Character *character;
-    ItemAxe *itemaxe;
-    ItemKey *itemkey;
-
+    Room *currentRoom;
     QMediaPlayer * music;
     int fps;
 
 public slots:
     void replayMusic(QMediaPlayer::State s);
 
+
 private slots:
-    void on_pushButton_clicked();
+    void on_Quit_pressed();
 
-    void on_pushButton_pressed();
+    void on_Journal_pressed();
 
-    void on_pushButton_2_clicked();
-
-    void on_moveLeft_clicked();
-
-    void on_moveRight_clicked();
-
-    void on_moveUp_clicked();
-
-    void on_moveDown_clicked();
+    void on_Map_pressed();
 
 private:
     Ui::MainWindow *ui;    

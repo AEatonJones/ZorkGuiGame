@@ -7,6 +7,12 @@
 
 Character::Character(QGraphicsItem *parent): QGraphicsPixmapItem(parent) {
     setPixmap(QPixmap(":/images/character1.png"));
+    foundFarkle = false;
+    foundFergus = false;
+    foundFelicia = false;
+    hasAxe = false;
+    hasDoll = false;
+    hasKey = false;
 }
 
 void Character::keyPressEvent(QKeyEvent *event) {
@@ -18,7 +24,7 @@ void Character::keyPressEvent(QKeyEvent *event) {
     }
     else if (event->key() == Qt::Key_Right){
         setPixmap(QPixmap(":/images/character2.png"));
-        if (pos().x() + 100 < 600)
+        if (pos().x() + 80 < 600)
             setPos(x()+10,y());
     }
     else if (event->key() == Qt::Key_Up){
@@ -26,28 +32,8 @@ void Character::keyPressEvent(QKeyEvent *event) {
             setPos(x(),y()-10);
     }
     else if (event->key() == Qt::Key_Down){
-        if (pos().y() + 100 < 378)
+        if (pos().y() + 80 < 378)
             setPos(x(),y()+10);
-    }
-    else if(event->key() == Qt::Key_Q) {
-        setPixmap(QPixmap(":/images/character1.png"));
-        if (pos().x() > 0 && pos().y() > 0)
-            setPos(x()-10,y()-10);
-    }
-    else if(event->key() == Qt::Key_E) {
-        setPixmap(QPixmap(":/images/character2.png"));
-        if (pos().x() + 100 < 600 && pos().y() > 0)
-            setPos(x()+10,y()-10);
-    }
-    else if(event->key() == Qt::Key_A) {
-        setPixmap(QPixmap(":/images/character1.png"));
-        if (pos().y() + 100 < 378 && pos().x() > 0)
-            setPos(x()-10,y()+10);
-    }
-    else if(event->key() == Qt::Key_D) {
-        setPixmap(QPixmap(":/images/character2.png"));
-        if (pos().y() + 100 < 378 && pos().x() + 100 < 600)
-            setPos(x()+10,y()+10);
     }
 
     /*QList<QGraphicsItem *> colliding_items = collidingItems();
@@ -72,8 +58,7 @@ void Character::keyPressEvent(QKeyEvent *event) {
     return QRect(0,0,20,20);
 }*/
 
-void Character::DoCollision()
-{
+void Character::DoCollision() {
     //see if the new position is in bounds
     QPointF newpoint = mapToParent(-(boundingRect().width()), -(boundingRect().width() + 2));
 
@@ -89,27 +74,21 @@ void Character::DoCollision()
     }
 }
 
+bool Character::getFoundFarkle() { return foundFarkle; }
+bool Character::getFoundFergus() { return foundFergus; }
+bool Character::getFoundFelicia() { return foundFelicia; }
+bool Character::getHasAxe() { return hasAxe; }
+bool Character::getHasDoll() { return hasDoll; }
+bool Character::getHasKey() { return hasKey; }
 
-/*
-Characterx::Characterx(string description) {
-    this->description = description;
-}
-void Characterx::addItem(Item &item) {
-    itemsInCharacter.push_back(item);
-}
-void Characterx::addItem(Item *item) {
-    itemsInCharacter.push_back(*item);
-    delete item;
-}
-string Characterx::longDescription()
-{
-  string ret = this->description;
-  ret += "\n Item list:\n";
-  for (vector<Item>::iterator i = itemsInCharacter.begin(); i != itemsInCharacter.end(); i++)
-    ret += "\t"+ (*i).getLongDescription() + "\n";
-  return ret;
-}
-*/
+void Character::setFoundFarkle() { foundFarkle = true; }
+void Character::setFoundFergus() { foundFergus = true; }
+void Character::setFoundFelicia() { foundFelicia = true; }
+void Character::setHasAxe() { hasAxe = true; }
+void Character::setHasDoll() { hasDoll = true; }
+void Character::setHasKey() { hasKey = true; }
+
+
 
 
 

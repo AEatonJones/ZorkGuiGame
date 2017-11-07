@@ -11,7 +11,26 @@ class Character:public QObject, public QGraphicsPixmapItem{
 public:
     Character(QGraphicsItem * parent=0);
     void keyPressEvent(QKeyEvent * event);
+    bool getFoundFarkle();
+    void setFoundFarkle();
+    bool getFoundFergus();
+    void setFoundFergus();
+    bool getFoundFelicia();
+    void setFoundFelicia();
+    bool getHasDoll();
+    void setHasDoll();
+    bool getHasAxe();
+    void setHasAxe();
+    bool getHasKey();
+    void setHasKey();
+
 private:
+    bool foundFarkle;
+    bool foundFergus;
+    bool foundFelicia;
+    bool hasDoll;
+    bool hasAxe;
+    bool hasKey;
     void DoCollision();
 };
 

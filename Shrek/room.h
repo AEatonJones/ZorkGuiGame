@@ -11,23 +11,19 @@ using std::vector;
 class Room {
 
 private:
-    string description;
+    QString description;
+    QString imageLoc;
     map<string, Room*> exits;
-    string exitString();
-    vector <Item> itemsInRoom;
+    vector <item> itemsInRoom;
 
 
 public:
-    int numberOfItems();
-    Room(string description);
+    Room(QString description,QString imageLoc);
     void setExits(Room *north, Room *east, Room *south, Room *west);
-    string shortDescription();
-    string longDescription();
+    QString Description();
+    QString getImageLoc();
     Room* nextRoom(string direction);
-    void addItem(Item *inItem);
-    string displayItem();
-    int isItemInRoom(string inString);
-    void removeItemFromRoom(int location);
+    void addItem(item *inItem);
 };
 
 #endif

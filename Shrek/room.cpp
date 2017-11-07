@@ -2,8 +2,9 @@
 #include "command.h"
 
 
-Room::Room(string description) {
-    this->description = description;
+Room::Room(QString inDescription,QString imageLocation) {
+    description = inDescription;
+    imageLoc = imageLocation;
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
@@ -17,20 +18,13 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
         exits["west"] = west;
 }
 
-string Room::shortDescription() {
+QString Room::Description() {
     return description;
 }
 
-string Room::longDescription() {
-    return "room = " + description + ".\n" + displayItem() + exitString();
-}
 
-string Room::exitString() {
-    string returnString = "\nexits =";
-    for (map<string, Room*>::iterator i = exits.begin(); i != exits.end(); i++)
-        // Loop through map
-        returnString += "  " + i->first;	// access the "first" element of the pair (direction as a string)
-    return returnString;
+QString Room::getImageLoc() {
+    return imageLoc;
 }
 
 Room* Room::nextRoom(string direction) {
@@ -41,50 +35,7 @@ Room* Room::nextRoom(string direction) {
                 // part of the "pair" (<string, Room*>) and return it.
 }
 
-void Room::addItem(Item *inItem) {
-    //cout <<endl;
-    //cout << "Just added" + inItem->getLongDescription();
+void Room::addItem(item *inItem) {
     itemsInRoom.push_back(*inItem);
 }
-
-string Room::displayItem() {
-    string tempString = "items in room = ";
-    int sizeItems = (itemsInRoom.size());
-    if (itemsInRoom.size() < 1) {
-        tempString = "no items in room";
-        }
-    else if (itemsInRoom.size() > 0) {
-       int x = (0);
-        for (int n = sizeItems; n > 0; n--) {
-            //tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
-            x++;
-            }
-        }
-    return tempString;
-    }
-
-int Room::numberOfItems() {
-    return itemsInRoom.size();
-}
-
-/*int Room::isItemInRoom(string inString)
-{
-    int sizeItems = (itemsInRoom.size());
-    if (itemsInRoom.size() < 1) {
-        return false;
-        }
-    else if (itemsInRoom.size() > 0) {
-       int x = (0);
-        //for (int n = sizeItems; n > 0; n--) {
-            // compare inString with short description
-            //int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
-            //if (tempFlag == 0) {
-                //itemsInRoom.erase(itemsInRoom.begin()+x);
-               // return x;
-           // }
-            //x++;
-            //}
-        }
-    //return -1;
-}*/
 

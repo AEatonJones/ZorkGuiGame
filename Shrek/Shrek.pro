@@ -27,28 +27,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         mainwindow.cpp \
     character.cpp \
-    command.cpp \
-    commandwords.cpp \
     item.cpp \
-    parser.cpp \
     room.cpp \
-    zorkul.cpp \
-    inventory.cpp \
-    itemaxe.cpp \
-    itemkey.cpp
+    zorkul.cpp
 
 HEADERS += \
         mainwindow.h \
     character.h \
-    command.h \
-    commandwords.h \
     item.h \
-    parser.h \
     room.h \
-    zorkul.h \
-    inventory.h \
-    itemaxe.h \
-    itemkey.h
+    zorkul.h
 
 FORMS += \
         mainwindow.ui
