@@ -23,6 +23,7 @@ public:
     void setHasAxe();
     bool getHasKey();
     void setHasKey();
+    bool foundKids();
 
 private:
     bool foundFarkle;
@@ -31,7 +32,7 @@ private:
     bool hasDoll;
     bool hasAxe;
     bool hasKey;
-    void DoCollision();
+
 };
 
 #endif // CHARACTER_H

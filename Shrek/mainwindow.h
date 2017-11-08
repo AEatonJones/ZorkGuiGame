@@ -10,12 +10,10 @@
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QGraphicsScene>
-#include <QMouseEvent>
 #include <QKeyEvent>
-#include "character.h"
-#include "item.h"
-#include "room.h"
 #include <QMediaPlayer>
+#include "character.h"
+#include "room.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,31 +30,44 @@ public:
     void initilizeScreen();
     void initilizeCharacter();
     void startMusic();
-    void createRooms();
-    void displayMap();
+    void createRoom();
     void displayJournal();
     void setRoom();
+    void playerWin();
+
     // attributes public as they need to be accessed by other classes
     QGraphicsScene * scene;
     Character *character;
     Room *currentRoom;
     QMediaPlayer * music;
     int fps;
+    bool donkeySoundPlaying;
 
 public slots:
     void replayMusic(QMediaPlayer::State s);
-
+    void restartButton(QMediaPlayer::State s);
 
 private slots:
     void on_Quit_pressed();
 
     void on_Journal_pressed();
 
-    void on_Map_pressed();
+    void on_fergusBTN_pressed();
+
+    void on_farkleBTN_pressed();
+
+    void on_feliciaBTN_pressed();
+
+    void on_axeBTN_pressed();
+
+    void on_keyBTN_pressed();
+
+    void on_dollBTN_pressed();
+
+    void on_donkeyBTN_pressed();
 
 private:
     Ui::MainWindow *ui;    
-    //QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

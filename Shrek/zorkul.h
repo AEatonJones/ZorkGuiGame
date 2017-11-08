@@ -2,7 +2,6 @@
 #define ZORKUL_H_
 
 #include "room.h"
-#include "item.h"
 #include <iostream>
 #include <string>
 #include <vector>

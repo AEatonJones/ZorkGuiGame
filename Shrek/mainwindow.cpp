@@ -1,7 +1,4 @@
 #include <QGraphicsScene>
-#include <QLineF>
-#include <QPointF>
-#include <QCursor>
 #include <QtWidgets>
 #include <QKeyEvent>
 #include <QBrush>
@@ -11,7 +8,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "zorkul.h"
-#include "item.h"
 #include "room.h"
 
 
@@ -19,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    createRooms();
+    createRoom();
     initilizeScreen();
     initilizeCharacter();
     startMusic();
@@ -38,7 +34,7 @@ void MainWindow::initilizeScreen()  {
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
     setFixedSize(850,450);
     setMouseTracking(true);
-    setWindowTitle("Detective Shrek");
+    setWindowTitle("Shrek");
 }
 
 void MainWindow::setRoom() {
@@ -49,7 +45,7 @@ void MainWindow::setRoom() {
 
 void MainWindow::initilizeCharacter()  {
     character = new Character();
-    character->setPos(400,250);
+    character->setPos(370,280);
     character->setFlag(QGraphicsItem::ItemIsFocusable);
     character->setFocus();
     scene->addItem(character);
@@ -60,8 +56,10 @@ void MainWindow::initilizeCharacter()  {
 void MainWindow::startMusic()  {
     QMediaPlayer * music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/music/music.mp3"));
+    music->setVolume(40);
     music->play();
     connect(music,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(replayMusic(QMediaPlayer::State)));
+    donkeySoundPlaying = false;
 }
 
 void MainWindow::replayMusic(QMediaPlayer::State s){
@@ -71,76 +69,12 @@ void MainWindow::replayMusic(QMediaPlayer::State s){
 }
 
 
-void MainWindow::createRooms() {
- Room *a, *b, *c, *d, *e, *f, *g, *h;
-        a = new Room(tr("House"),tr(":/images/house.png"));
-          // a->addItem("Farkle", 8, 4);
-          // a->addItem("Fergus", 8, 4);
-          // a->addItem("Felicia", 8, 4);
-        b = new Room(tr("Garden"),tr(":/images/garden.png"));
-        c = new Room("Bath Area",tr(":/images/batharea.png"));
-        d = new Room("Outhouse",tr(":/images/outhouse.png"));
-        e = new Room("Forest1",tr(":/images/forest1.png"));
-        f = new Room("Forest2",tr(":/images/forest2.png"));
-        g = new Room("Cross-Roads",tr(":/images/crossroads.png"));
-        h = new Room("Ruined House",tr(":/images/ruinedhouse.png"));
 
-    //         (N, E, S, W)
-    a->setExits(NULL, NULL, b, NULL);
-    b->setExits(a, c, g, e);
-    c->setExits(d, NULL, NULL, b);
-    d->setExits(NULL,NULL, c, NULL);
-    e->setExits(NULL, b, f, NULL);
-    f->setExits(e, g, NULL, NULL);
-    g->setExits(b, h, NULL, f);
-    h->setExits(NULL, NULL, NULL, g);
-    currentRoom = a;
-
+void MainWindow::createRoom() {
+    Room *shrekhouse;
+    shrekhouse = new Room(tr("House"),tr(":/images/house1.jpg"));
+    currentRoom = shrekhouse;
 }
-
-
-
-/*void MainWindow::mousePressEvent(QMouseEvent *event){
-    // if the left button was clicked
-    if (event->button() == Qt::LeftButton){
-        // inventory clicked
-        if (character->inventory->contains(event->pos())){
-            QMainWindow::mousePressEvent(event);
-            return;
-        }
-        // if there is nothing mapped to this click, return (do nothing)
-        if (character->inventory->left_click_item == nullptr){
-            return;
-        }
-        //if an item is mapped to left click - use item
-        character->inventory->left_click_item->use();
-    }
-
-    // right button clicked
-    if (event->button() == Qt::RightButton){
-        if (character->inventory->contains(event->pos())){
-            QMainWindow::mousePressEvent(event);
-            return;
-        }
-        if (character->inventory->right_click_item == nullptr){
-            return;
-        }
-        character->inventory->right_click_item->use();
-    }
-
-    // middle button clicked
-    if (event->button() == Qt::MiddleButton){
-        if (character->inventory->contains(event->pos())){
-            QMainWindow::mousePressEvent(event);
-            return;
-        }
-
-        if (character->inventory->middle_click_item == nullptr){
-            return;
-        }
-        character->inventory->middle_click_item->use();
-    }
-}*/
 
 void MainWindow::on_Quit_pressed() {
     exit(0);
@@ -157,17 +91,95 @@ void MainWindow::displayJournal() {
     QString resultAxe =  QString::number(character->getHasAxe());
     QString resultDoll = QString::number(character->getHasDoll());
     QString resultKey = QString::number(character->getHasKey());
-    QString journalEntry = "\nJournal\n-----------\nFound Farkle: " + resultFarkle + "\nFound Felicia: " + resultFelicia + ""
+    QString journalEntry = "Journal\n-----------\nFound Farkle: " + resultFarkle + "\nFound Felicia: " + resultFelicia + ""
                            "\nFound Fergus: " + resultFergus + "\nHave Axe: " + resultAxe + "\nHave Doll: " + resultDoll + "\nHave Key: " + resultKey;
     ui->logText->setText(journalEntry);
-
 }
 
-void MainWindow::on_Map_pressed() {
-    displayMap();
+void MainWindow::playerWin() {
+    ui->logText->setText("YOU HAVE FOUND ALL YOUR KIDS AND WON!");
 }
 
-void MainWindow::displayMap() {
-    ui->logText->setText(tr("\n                       [oh]\n                         |\n                         |\n[f1] --- [hh] --- [ba]\n |             |\n"
-                            " |             |\n[f2] --- [cr] --- [rh]"));
+void MainWindow::on_fergusBTN_pressed()
+{
+    if(character->getHasAxe()) {
+        character->setFoundFergus();
+        ui->fergusBTN->setVisible(false);
+        ui->logText->setText(tr("You picked up Fergus!"));
+        if(character->foundKids()) {
+            playerWin();
+        }
+    }
+    else {
+        ui->logText->setText(tr("I want to practice fighting so I can be a knight like you dad."));
+    }
+}
+
+void MainWindow::on_farkleBTN_pressed()
+{
+    if(character->getHasKey()) {
+        character->setFoundFarkle();
+        ui->farkleBTN->setVisible(false);
+        ui->logText->setText(tr("You picked up Farkle!"));
+        if(character->foundKids()) {
+            playerWin();
+        }
+    }
+    else {
+        ui->logText->setText(tr("I need the key to the outhouse."));
+    }
+}
+
+void MainWindow::on_feliciaBTN_pressed()
+{
+    if(character->getHasDoll()) {
+        character->setFoundFelicia();
+        ui->logText->setText(tr("You picked up Felicia!"));
+        ui->feliciaBTN->setVisible(false);
+        if(character->foundKids()) {
+            playerWin();
+        }
+    }
+    else {
+        ui->logText->setText(tr("I lost track of my doll, can you find it for me dad?"));
+    }
+}
+
+void MainWindow::on_axeBTN_pressed()
+{
+    character->setHasAxe();
+    ui->axeBTN->setVisible(false);
+    ui->logText->setText(tr("You have found the axe, use it to get Fergus!"));
+}
+
+void MainWindow::on_keyBTN_pressed()
+{
+    character->setHasKey();
+    ui->keyBTN->setVisible(false);
+    ui->logText->setText(tr("You have found the key, use it to get Farkle!"));
+}
+
+void MainWindow::on_dollBTN_pressed()
+{
+    character->setHasDoll();
+    ui->dollBTN->setVisible(false);
+    ui->logText->setText(tr("You have found the doll, use it to get Felicia!!"));
+}
+
+void MainWindow::on_donkeyBTN_pressed()
+{
+    if(!(donkeySoundPlaying)) {
+        donkeySoundPlaying = true;
+        QMediaPlayer * donkey = new QMediaPlayer();
+        donkey->setMedia(QUrl("qrc:/music/donkey.mp3"));
+        donkey->setVolume(100);
+        donkey->play();
+        connect(donkey,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(restartButton(QMediaPlayer::State)));
+    }
+}
+
+void MainWindow::restartButton(QMediaPlayer::State s){
+    if (s == QMediaPlayer::StoppedState){
+        donkeySoundPlaying = false;
+    }
 }

@@ -27,14 +27,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         mainwindow.cpp \
     character.cpp \
-    item.cpp \
     room.cpp \
     zorkul.cpp
 
 HEADERS += \
         mainwindow.h \
     character.h \
-    item.h \
     room.h \
     zorkul.h
 
