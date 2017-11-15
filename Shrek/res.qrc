@@ -11,9 +11,11 @@
         <file>house1.jpg</file>
         <file>donkey.png</file>
         <file>key.png</file>
+        <file>pussinboots.png</file>
     </qresource>
     <qresource prefix="/music">
         <file>music.mp3</file>
         <file>donkey.mp3</file>
+        <file>pussinboots.mp3</file>
     </qresource>
 </RCC>

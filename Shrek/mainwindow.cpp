@@ -21,10 +21,12 @@ MainWindow::MainWindow(QWidget *parent) :
     startMusic();
 }
 
+//Delete ui method.
 MainWindow::~MainWindow() {
     delete ui;
 }
 
+//Initializes our ui and graphics scene.
 void MainWindow::initilizeScreen()  {
     fps = 30;
     ui->setupUi(this);
@@ -37,12 +39,14 @@ void MainWindow::initilizeScreen()  {
     setWindowTitle("Shrek");
 }
 
+//Initilizes our ui and graphics scene.
 void MainWindow::setRoom() {
     QString backImage = currentRoom->getImageLoc();
     scene->setBackgroundBrush(QBrush(QImage(backImage)));
     ui->roomLoc->setText(currentRoom->Description());
 }
 
+//Initilizes our character and adds him to the graphics scene.
 void MainWindow::initilizeCharacter()  {
     character = new Character();
     character->setPos(370,280);
@@ -53,6 +57,12 @@ void MainWindow::initilizeCharacter()  {
     ui->graphicsView->setScene(scene);
 }
 
+/*Creates mediaplayer object and links it to a sound file.
+ * It then sets the volume of the object and set it playing.
+ * It connects this to a slot which check when the music file has finished.
+ * When it finished it sends it to the replaymusic slot.
+ * set the 2 bools to be false for the other buttons.
+ */
 void MainWindow::startMusic()  {
     QMediaPlayer * music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/music/music.mp3"));
@@ -60,30 +70,34 @@ void MainWindow::startMusic()  {
     music->play();
     connect(music,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(replayMusic(QMediaPlayer::State)));
     donkeySoundPlaying = false;
+    pussSoundPlaying =false;
 }
 
+// Takes in a signal when the music has entered the stopped state, and then starts it again.
 void MainWindow::replayMusic(QMediaPlayer::State s){
     if (s == QMediaPlayer::StoppedState){
         music->play();
     }
 }
 
-
-
+//Initilizes the room object the player is in.
 void MainWindow::createRoom() {
     Room *shrekhouse;
-    shrekhouse = new Room(tr("House"),tr(":/images/house1.jpg"));
+    shrekhouse = new Room(tr("Garden"),tr(":/images/house1.jpg"));
     currentRoom = shrekhouse;
 }
 
+//Exits the application.
 void MainWindow::on_Quit_pressed() {
     exit(0);
 }
 
+//Enters displayJournal method.
 void MainWindow::on_Journal_pressed() {
     displayJournal();
 }
 
+//Gets the results of the bools inside the character object and then displays them on the qlabel.
 void MainWindow::displayJournal() {
     QString resultFarkle = QString::number(character->getFoundFarkle());
     QString resultFelicia = QString::number(character->getFoundFelicia());
@@ -96,9 +110,11 @@ void MainWindow::displayJournal() {
     ui->logText->setText(journalEntry);
 }
 
+//Displays message in qlabel telling the player they have won.
 void MainWindow::playerWin() {
     ui->logText->setText("YOU HAVE FOUND ALL YOUR KIDS AND WON!");
 }
+
 
 void MainWindow::on_fergusBTN_pressed()
 {
@@ -168,18 +184,36 @@ void MainWindow::on_dollBTN_pressed()
 
 void MainWindow::on_donkeyBTN_pressed()
 {
-    if(!(donkeySoundPlaying)) {
+    if((!(donkeySoundPlaying)) && (!(pussSoundPlaying))) {
         donkeySoundPlaying = true;
         QMediaPlayer * donkey = new QMediaPlayer();
         donkey->setMedia(QUrl("qrc:/music/donkey.mp3"));
         donkey->setVolume(100);
         donkey->play();
-        connect(donkey,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(restartButton(QMediaPlayer::State)));
+        connect(donkey,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(restartDonkeyButton(QMediaPlayer::State)));
     }
 }
 
-void MainWindow::restartButton(QMediaPlayer::State s){
+void MainWindow::restartDonkeyButton(QMediaPlayer::State s){
     if (s == QMediaPlayer::StoppedState){
         donkeySoundPlaying = false;
+    }
+}
+
+void MainWindow::on_pussBTN_pressed()
+{
+    if((!(donkeySoundPlaying)) && (!(pussSoundPlaying))) {
+        pussSoundPlaying = true;
+        QMediaPlayer * puss = new QMediaPlayer();
+        puss->setMedia(QUrl("qrc:/music/pussinboots.mp3"));
+        puss->setVolume(100);
+        puss->play();
+        connect(puss,SIGNAL(stateChanged(QMediaPlayer::State)),SLOT(restartPussButton(QMediaPlayer::State)));
+    }
+}
+
+void MainWindow::restartPussButton(QMediaPlayer::State s){
+    if (s == QMediaPlayer::StoppedState){
+        pussSoundPlaying = false;
     }
 }

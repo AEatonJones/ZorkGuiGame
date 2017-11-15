@@ -17,7 +17,6 @@
 
 namespace Ui {
 class MainWindow;
-extern MainWindow * game;
 }
 
 class MainWindow : public QMainWindow
@@ -42,10 +41,12 @@ public:
     QMediaPlayer * music;
     int fps;
     bool donkeySoundPlaying;
+    bool pussSoundPlaying;
 
 public slots:
     void replayMusic(QMediaPlayer::State s);
-    void restartButton(QMediaPlayer::State s);
+    void restartDonkeyButton(QMediaPlayer::State s);
+    void restartPussButton(QMediaPlayer::State s);
 
 private slots:
     void on_Quit_pressed();
@@ -65,6 +66,8 @@ private slots:
     void on_dollBTN_pressed();
 
     void on_donkeyBTN_pressed();
+
+    void on_pussBTN_pressed();
 
 private:
     Ui::MainWindow *ui;    
